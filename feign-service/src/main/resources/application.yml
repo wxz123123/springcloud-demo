@@ -1,0 +1,14 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: feign-service
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka/
+#feign自带断路器hystrix，默认是关闭状态，需要在配置文件中配置打开它
+feign:
+  hystrix:
+    enabled: true

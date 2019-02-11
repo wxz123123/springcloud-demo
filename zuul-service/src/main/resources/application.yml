@@ -1,0 +1,21 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: zuul-service
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka/
+#zuul网关路由配置
+zuul:
+  routes:
+    #配置路由对应的微服务
+    api-user:
+      #/user/开头的请求，转发到user-service服务
+      path: /user/**
+      serviceId: user-service
+    api-order:
+      #/order/开头的请求，转发到order-service服务
+      path: /order/**
+      serviceId: order-service
