@@ -4,12 +4,12 @@
 springboot 2.1.2.RELEASE版本 
 springcloud Greenwich.RELEASE版本
 </code></pre>
- ###1、注册与发现
+ ### 1、注册与发现
  * springcloud常用注册中心是Eureka,也可以使用其他注册中心，如zookeeper
  * @EnableEurekaClient和@EnableDiscoveryClient注解都可以用于注册发现，将微服务注册到注册中心
  * @EnableEurekaClient只适用于Eureka注册中心，@EnableDiscoveryClient可以适用于其他注册中心
  
- ###2、springcloud中调用微服务的两种方式介绍(ribbon / feign )
+ ### 2、springcloud中调用微服务的两种方式介绍(ribbon / feign )
  * ribbon需要搭配RestTemplate使用
  * ribbon和feign都是springcloud调用微服务的方式
  * feign默认集成ribbon，具有负载均衡的能力
@@ -17,13 +17,13 @@ springcloud Greenwich.RELEASE版本
  * feign自带断路器hystrix，可直接在配置文件开启并使用（默认是关闭状态）；而ribbon需要整合断路器
  * feign采用基于注解方式调用微服务，只要创建一个接口并采用注解就可以调用微服务
  
- ###3、Hystrix断路器
+ ### 3、Hystrix断路器
  
- ###4、zuul网关路由
+ ### 4、zuul网关路由
  * zuul功能上类似于nginx
  * zuul主要功能是路由转发和过滤器
  * zuul默认和ribbon结合实现负载均衡的功能
- #####4.1、zuul路由转发配置
+ ##### 4.1、zuul路由转发配置
  <pre><code>
  #zuul网关路由配置
  zuul:
@@ -38,7 +38,7 @@ springcloud Greenwich.RELEASE版本
        path: /order/**
        serviceId: order-service
  </code></pre>
- #####4.2、zuul过滤器介绍
+ ##### 4.2、zuul过滤器介绍
   <pre><code>
        zuul有四种生命周期过滤器类型：
        * pre：请求被路由之前调用
@@ -58,7 +58,7 @@ springcloud Greenwich.RELEASE版本
        * 但是它的最后流向还是post类型的过滤器，因为它需要通过post过滤器将最终结果返回给请求客户端
   </code></pre>
   
-  ###5、配置中心
+  ### 5、配置中心
   分布式配置中心分为两个角色：config server 、config client（客户端用于读取服务器中的配置，不独立存在，通常是集成到各个普通的微服务中）
   ##### 5.1 config server 配置 
   <pre><code>
