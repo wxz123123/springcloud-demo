@@ -82,7 +82,7 @@ springcloud Greenwich.RELEASE版本
             password:
   </code></pre>
   ##### 5.2 config client 配置
-  注意：新建一个bootsrap.yml配置文件，把config client配置信息写着bootsrap.yml中，不能配置在appplication.yml中，否则启动会报错
+  注意：新建一个bootsrap.yml配置文件，把config client配置信息和eureka注册配置写着bootsrap.yml中，不能配置在appplication.yml中，否则启动会报错
   <pre><code>
 #下面这一部分一定要放在bootstrap.yml中，不能放在application.yml中，否则启动会报错
 eureka:
@@ -106,3 +106,27 @@ spring:
         enabled: true
         service-id: config-service
   </code></pre>
+  ##### 5.3 配置中心使用遇到的坑
+  （1）启动报错，找不到配置Could not resolve placeholder 'xxx' in value "${xxx}"
+      可能是因为config client 配置不全导致，我就是忘了添加spring.cloud.config.name就遇到这个问题
+      解决方法：补全config client配置信息
+   <pre><code>
+    Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'system.password' in value "${system.password}"
+    	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:172) ~[spring-core-5.1.4.RELEASE.jar:5.1.4.RELEASE]
+    	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:124) ~[spring-core-5.1.4.RELEASE.jar:5.1.4.RELEASE]
+    	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:237) ~[spring-core-5.1.4.RELEASE.jar:5.1.4.RELEASE]
+    	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:211) ~[spring-core-5.1.4.RELEASE.jar:5.1.4.RELEASE]
+   </code></pre>
+   
+  （2）启动报错,可能config client配置和eureka注册配置放在application.yml导致配置加载顺序问题，
+  解决方法：将config client配置信息和eureka注册配置放到bootstrap.yml中就不会报错了(详见5.2)
+  <pre><code>
+  com.sun.jersey.api.client.ClientHandlerException: java.net.ConnectException: Connection refused: connect
+  	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:187) ~[jersey-apache-client4-1.19.1.jar:1.19.1]
+  	at com.sun.jersey.api.client.filter.GZIPContentEncodingFilter.handle(GZIPContentEncodingFilter.java:123) ~[jersey-client-1.19.1.jar:1.19.1]
+  	at com.netflix.discovery.EurekaIdentityHeaderFilter.handle(EurekaIdentityHeaderFilter.java:27) ~[eureka-client-1.9.8.jar:1.9.8]
+  	at com.sun.jersey.api.client.Client.handle(Client.java:652) ~[jersey-client-1.19.1.jar:1.19.1]
+  	at com.sun.jersey.api.client.WebResource.handle(WebResource.java:682) ~[jersey-client-1.19.1.jar:1.19.1]
+  	at com.sun.jersey.api.client.WebResource.access$200(WebResource.java:74) ~[jersey-client-1.19.1.jar:1.19.1]
+  	at com.sun.jersey.api.client.WebResource$Builder.get(WebResource.java:509) ~[jersey-client-1.19.1.jar:1.19.1]
+  </code></pre>   
