@@ -1,0 +1,21 @@
+#下面这一部分一定要放在bootstrap.yml中，不能放在application.yml中，否则启动会报错
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka/
+spring:
+  application:
+    name: user-service
+  #配置中心客户端配置
+  cloud:
+    config:
+      #指明远程仓库的分支
+      label: master
+      #指明读取那个环境的配置文件
+      profile: dev
+      #必须指明配置文件名字，否则启动会报错找不到配置信息，多个配置文件用,号分开（如配置文件为user-dev.properties时，此时配置为user，去配置文件横岗前半段）
+      name: user,system
+      #开启Config服务发现支持
+      discovery:
+        enabled: true
+        service-id: config-service

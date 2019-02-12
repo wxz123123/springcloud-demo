@@ -1,25 +1,24 @@
 server:
   port: 8085
-#spring:
-#  application:
-#    name: config-service
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: http://localhost:8080/eureka/
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka/
 #git配置仓库
 spring:
+  application:
+    name: config-service
   cloud:
     config:
       server:
         git:
           #配置git仓库地址
           uri: https://github.com/wxz123123/springcloud-demo.git
-          #配置仓库路径
+          #配置仓库路径（文件夹路径名称）
           search-paths: config-repo
           #配置仓库的分支
           default-label: master
-          #访问git仓库的用户名(公有仓库不需要)
+          #访问git仓库的用户名(公有仓库不需要填写)
           username:
-          #访问git仓库的用户密码(公有仓库不需要)
+          #访问git仓库的用户密码(公有仓库不需要填写)
           password:

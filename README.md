@@ -59,4 +59,50 @@ springcloud Greenwich.RELEASE版本
   </code></pre>
   
   ###5、配置中心
-  分布式配置中心分为两个角色：配置服务器 、配置客户端（客户端不独立存在，通常是集成到各个普通的微服务中）
+  分布式配置中心分为两个角色：config server 、config client（客户端用于读取服务器中的配置，不独立存在，通常是集成到各个普通的微服务中）
+  ##### 5.1 config server 配置 
+  <pre><code>
+  #git配置仓库
+  spring:
+    application:
+      name: config-service
+    cloud:
+      config:
+        server:
+          git:
+            #配置git仓库地址
+            uri: https://github.com/wxz123123/springcloud-demo.git
+            #配置仓库路径（文件夹路径名称）
+            search-paths: config-repo
+            #配置仓库的分支
+            default-label: master
+            #访问git仓库的用户名(公有仓库不需要填写)
+            username:
+            #访问git仓库的用户密码(公有仓库不需要填写)
+            password:
+  </code></pre>
+  ##### 5.2 config client 配置
+  注意：新建一个bootsrap.yml配置文件，把config client配置信息写着bootsrap.yml中，不能配置在appplication.yml中，否则启动会报错
+  <pre><code>
+#下面这一部分一定要放在bootstrap.yml中，不能放在application.yml中，否则启动会报错
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka/
+spring:
+  application:
+    name: user-service
+  #配置中心客户端配置
+  cloud:
+    config:
+      #指明远程仓库的分支
+      label: master 
+      #指明读取那个环境的配置文件
+      profile: dev
+      #必须指明配置文件名字，否则启动会报错找不到配置信息，多个配置文件用,号分开（如配置文件为user-dev.properties时，此时配置为user，去配置文件横岗前半段）
+      name: user,system
+      #开启Config服务发现支持
+      discovery:
+        enabled: true
+        service-id: config-service
+  </code></pre>
