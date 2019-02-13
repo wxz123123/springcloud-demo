@@ -6,8 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * Created by Administrator on 2019/2/11.
- * ribbon调用服务
+ * @Description ribbon调用服务
+ * @Author wxz
+ * @Date 2019/2/13 11:51
  */
 @Service
 public class UserService {

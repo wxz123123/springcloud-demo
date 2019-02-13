@@ -5,9 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 /**
- * Created by Administrator on 2019/2/11.
+ * @Description TODO
+ * @Author wxz
+ * @Date 2019/2/13 11:52
  */
 @RestController
 public class FeignController {

@@ -170,7 +170,9 @@ spring:
           include: '*'
   </code></pre>
   * 4、在读取配置的类上面加入注解@RefreshScope，
-  * 5、当配置更新之后，我们就post请求http://localhost:8081/actuator/bus-refresh ，config client应用就可读取到新配置
+  * 5、当配置更新之后，我们就post请求http://localhost:8081/actuator/bus-refresh ，config client应用就可读取到新配置,
+  如果觉得每次都手动发起post请求刷新配置麻烦。我们可以在git配置仓库上面 配置 WebHooks，把刷新配置的post连接添加到WebHooks中，
+  那么以后没次git配置中心更新配置的时候，git仓库就会自动调取我们指定的接口刷新配置。就不需要我们手动调取了。
   
   
   

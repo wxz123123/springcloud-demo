@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by Administrator on 2019/2/11.
+ * @Description TODO
+ * @Author wxz
+ * @Date 2019/2/13 11:50
  */
 @RestController
 @RefreshScope//用于bus刷新配置

@@ -10,8 +10,9 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Zuul过滤器，可以做安全验证等功能
- * Created by Administrator on 2019/2/11.
+ * @Description Zuul过滤器，可以做安全验证等功能
+ * @Author wxz
+ * @Date 2019/2/13 11:50
  */
 @Component
 @Slf4j
