@@ -130,3 +130,47 @@ spring:
   	at com.sun.jersey.api.client.WebResource.access$200(WebResource.java:74) ~[jersey-client-1.19.1.jar:1.19.1]
   	at com.sun.jersey.api.client.WebResource$Builder.get(WebResource.java:509) ~[jersey-client-1.19.1.jar:1.19.1]
   </code></pre>   
+  ### 6 消息总线（目前springcloud 仅支持kafka、rabbitmq这两种消息中间件，本例使用了rabbitmq）
+  由于我们使用了配置中心存储配置之后，如果更新配置信息，config client读取到的还是原来的配置，需要重启config client之后才能获取新的配置，
+  但是每次重启项目很不方便，所以我们引入了消息总线负责刷新配置，就不需要重启项目了。
+  ####6.1  代码中加入消息总线刷新配置步骤如下
+  * 1、如果没有rabbitmq,需要安装，windows版本安装包见文件夹installation-package,当然也可以另行下载，不过要注意Erlang和rabiitmq版本要对应
+  * 2、加入依赖包
+  
+		<!--消息中心 jar 用于提醒服务更新配置信息-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
+		</dependency>
+		<!--程序监控的包，用于暴露bus-refresh端口，用作刷新配置-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+  * 3、添加rabbitMQ配置，和springcloud bus配置
+  <pre><code>
+  spring:
+      #消息总线配置(用于配置中心的配置更新时通知各个微服务)
+      bus:
+        enabled: true
+        trace:
+          enabled: true
+    #消息中心RabbitMQ配置
+    rabbitmq:
+      host: localhost
+      port: 5672
+      username: guest
+      password: guest
+  management:
+    endpoint:
+    endpoints:
+      web:
+        exposure:
+          #暴露bus-refresh节点，通过此节点刷新配置
+          include: '*'
+  </code></pre>
+  * 4、在读取配置的类上面加入注解@RefreshScope，
+  * 5、当配置更新之后，我们就post请求http://localhost:8081/actuator/bus-refresh ，config client应用就可读取到新配置
+  
+  
+  

@@ -19,3 +19,24 @@ spring:
       discovery:
         enabled: true
         service-id: config-service
+    #消息总线配置(用于配置中心的配置更新时通知各个微服务)
+    bus:
+      enabled: true
+      trace:
+        enabled: true
+  #消息中心RabbitMQ配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+management:
+  endpoint:
+  endpoints:
+    web:
+      exposure:
+        #暴露bus-refresh节点，通过此节点刷新配置
+        include: '*'
+
+
+
