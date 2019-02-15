@@ -31,7 +31,6 @@ spring:
     username: guest
     password: guest
 management:
-  endpoint:
   endpoints:
     web:
       exposure:
